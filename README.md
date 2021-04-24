@@ -73,7 +73,7 @@ $ ssh-copy-id -i ~/.ssh/id_rsa debian@beaglebone
 (...)
 ```
 
-## Passwordless sudo
+## sudo without Password
 Open the `/etc/sudoers.d/admin` file and add the `NOPASSWD` keyword:
 
 ```
