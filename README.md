@@ -5,9 +5,9 @@ When I recently did this, I found much of the information available online quite
 
 1. Pre-requisites
 2. Basic Setup
-  1.  _Optional:_ Set up SSH
-  2.  _Optional:_ `sudo` without Password
-  3.  _Optional:_ Grow File System
+   1.  _Optional:_ Set up SSH
+   2.  _Optional:_ `sudo` without Password
+   3.  _Optional:_ Grow File System
 
 # Pre-requisites
 For completeness, here's the list of things you'll need as well as a few links to instructions on how to get your Board running with the plain distribution.
