@@ -152,11 +152,24 @@ PASSED: pru-rproc
 ```
 
 # Assorted Notes
+
+## Build PRU Firmware
+```
+export PRU_CGT=/usr/share/ti/cgt-pru
+sudo ln -s /usr/bin/ /usr/share/ti/cgt-pru/bin
+make
+sudo -E make install
+```
+
 ## Set-up uEnv.txt
 ```
 disable_uboot_overlay_video=1
 uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-19-TI-00A0.dtbo
 dtb_overlay=/lib/firmware/beaglelogic-00A0.dtbo
+```
+
+## Misc.
+```
 sudo /opt/scripts/tools/update_kernel.sh
 sudo apt-get install seeed-modules ???
 sudo modprobe pruss ???
