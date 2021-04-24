@@ -3,16 +3,20 @@ This page aims to provide a quick _"Cook Book"_-like Set of instructions to set 
 
 When I recently did this, I found much of the information available online quite dated, which often meant that it did not apply to or work with the most recent Distribution.
 
-1. Pre-requisites and Basic Setup
-2. _Optional:_ Set up SSH and `sudo`
+1. Pre-requisites
+2. Basic Setup
+  1.  _Optional:_ Set up SSH
+  2.  _Optional:_ `sudo` without Password
+  3.  _Optional:_ Grow File System
 
-# Step 1 - Pre-requisites and Basic Setup
+# Pre-requisites
 For completeness, here's the list of things you'll need as well as a few links to instructions on how to get your Board running with the plain distribution.
 
-## Pre-requisites
-For completeness, here's the list of things needed:
+Things needed:
 - Micro SD Card w/ at least 8 GBytes Capacity.
-- BeagleBone Black Rev. C Board
+- BeagleBone Black Rev. C Board.
+
+The rest of this page assumes that your Board is powered by USB. Also, it should be connected by cable to your local Ethernet network. Your network should have a workin DHCP and mDNS configuration. I guess mDNS is optional, but it will let you access your board via the default `beaglebone` host name instead of using its IP address.
 
 ## Download and Flash Image
 Start by downloading the most recent Debian Image for the BeagleBone Black.
@@ -21,13 +25,12 @@ At the time of writing, this is the [AM3358 Debian 10.3 2020-04-06 4GB SD IoT](h
 
 Generally, you can follow the official [Getting Started](https://beagleboard.org/getting-started#update) instructions.
 
-## Basic Setup
-The rest of this page assumes that your Board is powered by USB. Also, it should be connected by cable to your local Ethernet network. Your network should have a workin DHCP and mDNS configuration. I guess mDNS is optional, but it will let you access your board via the default `beaglebone` host name instead of using its IP address.
+# Basic Setup
 
-# Step 2 - Set up SSH and sudo
+## Set up SSH
 This step is optional and can be skipped. I just don't like re-typing passwords over and over again while I'm working on projects like this one.
 
-## First Log-in
+### First Log-in
 SSH into your board with the default User `debian`. The initial Password is `temppwd`.
 
 ```
@@ -52,7 +55,7 @@ permitted by applicable law.
 debian@beaglebone:~$
 ```
 
-## Generate SSH Keys
+### Generate SSH Keys
 On the BeagleBone, run:
 ```
 debian@beaglebone:~$ ssh-keygen -t rsa
@@ -65,7 +68,7 @@ Your public key has been saved in /home/debian/.ssh/id_rsa.pub.
 (...)
 ```
 
-## Copy authorized SSH Keys
+### Copy authorized SSH Keys
 From your Desktop machine, copy its SSH Public Key to the BeagleBoard:
 
 ```
@@ -86,6 +89,14 @@ Change the file to read this:
 Defaults	env_keep += "NODE_PATH"
 %admin ALL=(ALL:ALL) NOPASSWD: ALL
 ```
+
+## Grow File System
+After installation, grow the file system to use all of your SD Card's Capacity:
+
+```
+sudo /opt/scripts/tools/grow_partition.sh
+```
+
 # Assorted Notes
 ## Set-up uEnv.txt
 ```
