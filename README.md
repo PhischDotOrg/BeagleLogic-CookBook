@@ -86,3 +86,11 @@ Change the file to read this:
 Defaults	env_keep += "NODE_PATH"
 %admin ALL=(ALL:ALL) NOPASSWD: ALL
 ```
+# Assorted Notes
+## Set-up uEnv.txt
+```
+disable_uboot_overlay_video=1
+uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-19-TI-00A0.dtbo
+dtb_overlay=/lib/firmware/beaglelogic-00A0.dtbo
+```
+
