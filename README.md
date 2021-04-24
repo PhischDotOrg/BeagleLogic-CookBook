@@ -159,4 +159,5 @@ uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-19-TI-00A0.dtbo
 dtb_overlay=/lib/firmware/beaglelogic-00A0.dtbo
 sudo /opt/scripts/tools/update_kernel.sh
 sudo apt-get install seeed-modules ???
+sudo modprobe pruss ???
 ```
