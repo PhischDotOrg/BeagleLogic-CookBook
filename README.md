@@ -8,6 +8,7 @@ When I recently did this, I found much of the information available online quite
    1.  _Optional:_ Set up SSH
    2.  _Optional:_ `sudo` without Password
    3.  _Optional:_ Grow File System
+3. PRU and Overlays
 
 # Pre-requisites
 For completeness, here's the list of things you'll need as well as a few links to instructions on how to get your Board running with the plain distribution.
@@ -97,6 +98,34 @@ After installation, grow the file system to use all of your SD Card's Capacity:
 sudo /opt/scripts/tools/grow_partition.sh
 ```
 
+# Check PRU Configuration
+I found the below options / settings were already enabled by default when I initially flashed the image. However, the information may come in handy when trying to figure out why certain things don't work.
+
+## Check the u-Boot Flattened Device Tree (FTD) Overlays
+Open `/boot/uEnv.txt` and make sure the following lines are active, i.e. not commented out:
+
+```
+uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-19-TI-00A0.dtbo
+```
+
+To check whether the overlay was in fact loaded, do this:
+
+```
+debian@beaglebone:~$ sudo /opt/scripts/tools/version.sh | grep UBOOT
+UBOOT: Booted Device-Tree:[am335x-boneblack-uboot-univ.dts]
+UBOOT: Loaded Overlay:[AM335X-PRU-RPROC-4-19-TI-00A0]
+UBOOT: Loaded Overlay:[BB-ADC-00A0]
+UBOOT: Loaded Overlay:[BB-BONE-eMMC1-01-00A0]
+```
+
+## Check the PRU remoteproc drivers
+Check whether the PRU remoteproc driver attached properly:
+
+```
+debian@beaglebone:~$ rc_test_drivers | grep rproc
+PASSED: pru-rproc
+```
+
 # Assorted Notes
 ## Set-up uEnv.txt
 ```
@@ -104,4 +133,3 @@ disable_uboot_overlay_video=1
 uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-19-TI-00A0.dtbo
 dtb_overlay=/lib/firmware/beaglelogic-00A0.dtbo
 ```
-
