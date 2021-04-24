@@ -98,6 +98,30 @@ After installation, grow the file system to use all of your SD Card's Capacity:
 ```
 sudo /opt/scripts/tools/grow_partition.sh
 ```
+# Build BeagleLogic
+
+## Clone the git Repository
+Clone the BeagleLogic git repository:
+```
+debian@beaglebone:~$ git clone https://github.com/abhishek-kakkar/BeagleLogic.git
+Cloning into 'BeagleLogic'...
+(...)
+```
+
+## Install the Kernel Headers
+```
+debian@beaglebone:~$ sudo apt-get update
+(...)                                                                                             
+Reading package lists... Done
+debian@beaglebone:~$ sudo apt-get update
+debian@beaglebone:~$ sudo apt-get install linux-headers-$(uname -r)
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  linux-headers-4.19.94-ti-r42
+(...)
+```
 
 # Check PRU Configuration
 I found the below options / settings were already enabled by default when I initially flashed the image. However, the information may come in handy when trying to figure out why certain things don't work.
