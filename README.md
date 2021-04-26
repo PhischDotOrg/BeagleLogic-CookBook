@@ -123,10 +123,55 @@ The following NEW packages will be installed:
 (...)
 ```
 
-# Check PRU Configuration
+## Build the Kernel Module
+```
+debian@beaglebone:~$ cd BeagleLogic/kernel
+debian@beaglelogic:~/BeagleLogic/kernel$ make
+debian@beaglelogic:~/BeagleLogic/kernel$ sudo make install
+```
+
+## Build PRU Firmware
+```
+debian@beaglebone:~$ cd BeagleLogic/firmware
+debian@beaglelogic:~/BeagleLogic/firmware$ export PRU_CGT=/usr/share/ti/cgt-pru
+debian@beaglelogic:~/BeagleLogic/firmware$ sudo ln -s /usr/bin/ /usr/share/ti/cgt-pru/bin
+debian@beaglelogic:~/BeagleLogic/firmware$ make
+debian@beaglelogic:~/BeagleLogic/firmware$ sudo -E make install
+```
+
+# Post-Build Set-up
+## Set-up uEnv.txt
+### Disable HDMI
+BeagleLogic needs to use the same pin as HDMI normally would. Disable the HDMI ports by making sure the following line is uncommented in `/boot/uEnv.txt`: 
+```
+disable_uboot_overlay_video=1
+```
+
+### Add BeagleLogic Flattened Device Tree (FTD) Overlay
+Add the custom BeagleLogic Flattened Device Tree (FTD) Overlay in `/boot/uEnv.txt`:
+```
+dtb_overlay=/lib/firmware/beaglelogic-00A0.dtbo
+```
+
+Without this, the `beaglelogic` Kernel driver will not probe/attach successfully.
+
+## Add Group for BeagleLogic user(s)
+```
+debian@beaglelogic:~$ sudo usermod -a -G beaglelogic `whoami`
+debian@beaglelogic:~$ sudo groupadd beaglelogic
+```
+
+## Add `udev` Rules
+```
+debian@beaglelogic:~$ cd BeagleLogic
+debian@beaglelogic:~/BeagleLogic$ sudo cp scripts/90-beaglelogic.rules /etc/udev/rules.d/90-beaglelogic.rules
+```
+
+# Debugging Hints
+## Check PRU Configuration
 I found the below options / settings were already enabled by default when I initially flashed the image. However, the information may come in handy when trying to figure out why certain things don't work.
 
-## Check the u-Boot Flattened Device Tree (FTD) Overlays
+### Check the u-Boot Flattened Device Tree (FTD) Overlays
 Open `/boot/uEnv.txt` and make sure the following lines are active, i.e. not commented out:
 
 ```
@@ -143,7 +188,7 @@ UBOOT: Loaded Overlay:[BB-ADC-00A0]
 UBOOT: Loaded Overlay:[BB-BONE-eMMC1-01-00A0]
 ```
 
-## Check the PRU remoteproc drivers
+### Check the PRU remoteproc drivers
 Check whether the PRU remoteproc driver attached properly:
 
 ```
@@ -152,21 +197,6 @@ PASSED: pru-rproc
 ```
 
 # Assorted Notes
-
-## Build PRU Firmware
-```
-export PRU_CGT=/usr/share/ti/cgt-pru
-sudo ln -s /usr/bin/ /usr/share/ti/cgt-pru/bin
-make
-sudo -E make install
-```
-
-## Set-up uEnv.txt
-```
-disable_uboot_overlay_video=1
-uboot_overlay_pru=/lib/firmware/AM335X-PRU-RPROC-4-19-TI-00A0.dtbo
-dtb_overlay=/lib/firmware/beaglelogic-00A0.dtbo
-```
 
 ## Misc.
 ```
