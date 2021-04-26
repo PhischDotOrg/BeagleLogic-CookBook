@@ -103,7 +103,7 @@ sudo /opt/scripts/tools/grow_partition.sh
 ## Clone the git Repository
 Clone the BeagleLogic git repository:
 ```
-debian@beaglebone:~$ git clone https://github.com/abhishek-kakkar/BeagleLogic.git
+debian@beaglebone:~$ git clone https://github.com/PhischDotOrg/BeagleLogic.git
 Cloning into 'BeagleLogic'...
 (...)
 ```
